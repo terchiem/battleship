@@ -1,0 +1,27 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "Battleship App from the Odin Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terchiem/battleship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terchiem/battleship/issues"
+  },
+  "homepage": "https://github.com/terchiem/battleship#readme",
+  "dependencies": {
+    "webpack": "^4.39.1"
+  },
+  "devDependencies": {
+    "tap-dot": "^2.0.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0"
+  }
+}
