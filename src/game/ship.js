@@ -12,8 +12,8 @@ class Ship {
   }
 
   isSunk() {
-    for(let index of this.body) {
-      if(index === undefined) return false;
+    for(let squareHit of this.body) {
+      if(squareHit === undefined) return false;
     }
     return true;
   }
