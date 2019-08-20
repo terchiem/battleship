@@ -4,7 +4,8 @@
   "description": "Battleship App from the Odin Project",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | tap-spec"
+    "test": "tape test/*.js | tap-spec",
+	"watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,16 @@
     "webpack": "^4.39.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.2.0",
+    "style-loader": "^1.0.0",
     "tap-dot": "^2.0.0",
     "tap-spec": "^5.0.0",
-    "tape": "^4.11.0"
+    "tape": "^4.11.0",
+    "webpack-cli": "^3.3.6"
   }
 }

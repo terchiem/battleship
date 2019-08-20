@@ -21,6 +21,7 @@ class Player {
     } while (!player.board.validAttack(row, col))
 
     player.board.receiveAttack(row, col);
+    return [ row, col ];
   }
 }
 

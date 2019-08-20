@@ -88,8 +88,18 @@ test('Gameboard: allSunk', (t) => {
   t.end();
 })
 
-// test('', (t) => {
-
-//   t.equal(1, 1);
-//   t.end();
-// })
+test('Gameboard: shipsLeft', (t) => {
+  const board = new Gameboard();
+  const ship1 = new Ship(1);
+  const ship2 = new Ship(2);
+  board.placeShip(ship1, [0,0], true);
+  t.equal(1, board.shipsLeft(), 'one ship left after adding one');
+  board.placeShip(ship2, [1,0], true);
+  t.equal(2, board.shipsLeft(), 'two ships left after adding another');
+  board.receiveAttack(0,0);
+  t.equal(1, board.shipsLeft(), 'one ship left after sinking one');
+  board.receiveAttack(1,0);
+  board.receiveAttack(1,1);
+  t.equal(0, board.shipsLeft(), 'no ships left after sinking two');
+  t.end();
+})

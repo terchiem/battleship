@@ -1,3 +1,5 @@
+const Ship = require('./ship.js'); // debug
+
 class Gameboard {
   constructor() {
     this.ships = [];
@@ -5,7 +7,6 @@ class Gameboard {
     for(let i = 0; i < this.board.length; i++) {
       this.board[i] = new Array(10);
     }
-
   }
 
   get(row, col) {
@@ -61,11 +62,26 @@ class Gameboard {
     }
   }
 
+  shipsLeft() {
+    return this.ships.reduce((total, ship) => {
+      if (ship.isSunk()) total--;
+      return total;
+    }, this.ships.length);
+  }
+
   allSunk() {
     for(let ship of this.ships) {
       if(!ship.isSunk()) return false;
     }
     return true;
+  }
+
+  initTestShips() {
+    this.placeShip(new Ship(2), [0,0], true);
+    this.placeShip(new Ship(3), [1,5], true);
+    this.placeShip(new Ship(3), [2,9], false);
+    this.placeShip(new Ship(4), [5,2], false);
+    this.placeShip(new Ship(5), [8,4], true);
   }
 }
 
