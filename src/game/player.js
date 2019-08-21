@@ -1,4 +1,5 @@
 const Gameboard = require('./gameboard.js');
+const Ship = require('./ship.js');
 
 class Player {
   constructor() {
@@ -22,6 +23,23 @@ class Player {
 
     player.board.receiveAttack(row, col);
     return [ row, col ];
+  }
+  
+  randomShips() {
+    const shipSizes = [2, 3, 3, 4, 5];
+
+    for (let size of shipSizes) {
+      const ship = new Ship(size);
+      let row, col, hor;
+
+      do {
+        row = Math.floor(Math.random() * Math.floor(10));
+        col = Math.floor(Math.random() * Math.floor(10));
+        hor = Math.floor(Math.random() * Math.floor(2));
+      } while (!this.board.validPlaceShip(ship, [row,col], hor));
+
+      this.board.placeShip(ship, [row,col], hor);
+    }
   }
 }
 

@@ -75,14 +75,6 @@ class Gameboard {
     }
     return true;
   }
-
-  initTestShips() {
-    this.placeShip(new Ship(2), [0,0], true);
-    this.placeShip(new Ship(3), [1,5], true);
-    this.placeShip(new Ship(3), [2,9], false);
-    this.placeShip(new Ship(4), [5,2], false);
-    this.placeShip(new Ship(5), [8,4], true);
-  }
 }
 
 module.exports = Gameboard;

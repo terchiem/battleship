@@ -39,3 +39,12 @@ test('Player: randomAttack', (t) => {
 
   t.end();
 })
+
+test('Player: randomShips', (t) => {
+  const player = new Player();
+
+  t.equal(0, player.board.ships.length, 'player starts with no ships');
+  player.randomShips();
+  t.equal(5, player.board.ships.length, 'player has 5 ships after randomShips');
+  t.end();
+})
