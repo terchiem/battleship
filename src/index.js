@@ -1,48 +1,27 @@
 import '../src/styles/style.scss';
 import Player from '../src/game/player.js';
 
-const player = new Player();
-const computer = new Player();
+let player = new Player();
+let computer = new Player();
 let gameStarted = true;
 let playerTurn = true;
+let compShips;
 
 $(document).ready(() => {
-  // create board cells
+  $('.results').hide();
+
+  // create board cell elements
   for(let i = 0; i < 10; i++) {
     for(let j = 0; j < 10; j++) {
-      const el = document.createElement('div');
-      $(el).attr('data-row', i);
-      $(el).attr('data-col', j);
-      $(el).data({coord: [i,j]});
-      $(el).addClass('cell');
+      const el = $(document.createElement('div'));
+      el.attr('data-row', i);
+      el.attr('data-col', j);
+      el.addClass('cell');
       $('.board').append(el);
     }
   }
 
-  // populate board
-  player.board.initTestShips();
-  computer.board.initTestShips();
-  const playerShips = [];
-  const compShips = [];
-  player.board.board.map((row, i) => {
-    row.map((cell, j) => {
-      if(typeof cell === 'object') playerShips.push([i,j]);
-    })
-  });
-  computer.board.board.map((row, i) => {
-    row.map((cell, j) => {
-      if(typeof cell === 'object') compShips.push(`${i},${j}`);
-    })
-  });
-    playerShips.map((item) => {
-    $(`.player [data-row=${item[0]}][data-col=${item[1]}]`).addClass('ship');
-  })
-
-
-  $('.cell').each(function() {
-    $(this).html(`<p>${$(this).data('coord')}</p>`);
-  })
-
+  // set up click event
   $('.computer .cell').each(function() {
     $(this).on('click', () => {
       if (!gameStarted || !playerTurn) return;
@@ -51,17 +30,17 @@ $(document).ready(() => {
       if (player.attack(computer, coord.split(','))) {
         if (compShips.includes(coord)) {
           $(this).addClass('hit');
-          $('.computer .ships').text(computer.board.shipsLeft());
+          updateShipsLeft();
         } else {
           $(this).addClass('miss');
         }
       } else {
-        console.log('invalid');
         return;
       }
 
       if (gameOver()) {
-        console.log('player wins');
+        $('.result-msg').text("You win!");
+        $('.results').show();
         gameStarted = false;
       } else {
         playerTurn = false;
@@ -70,7 +49,11 @@ $(document).ready(() => {
     })
   })
 
+  // set up button events
+  $('.new-game').on('click', newGame);
+  $('.close-result').on('click', () => $('.results').hide() );
 
+  newGame();
 })
 
 function gameOver() {
@@ -83,15 +66,70 @@ function computerTurn() {
   
   if (square.hasClass('ship')) {
     square.addClass('hit');
-    $('.player .ships').text(player.board.shipsLeft());
+    updateShipsLeft();
   } else {
     square.addClass('miss');
   }
 
   if (gameOver()) {
-    console.log('computer wins');
+    $('.result-msg').text("You lose!");
+    $('.results').show();
     gameStarted = false;
   } else {
     playerTurn = true;
   }
+}
+
+function resetBoard() {
+  const cells = $('.cell')
+  cells.removeClass('hit');
+  cells.removeClass('miss');
+  cells.removeClass('ship');
+}
+
+function newGame() {
+  $('.results').hide();
+  resetBoard();
+  newComp();
+  newPlayer();
+  updateShipsLeft();
+  gameStarted = true; // debug
+  playerTurn = true;
+}
+
+function newComp() {
+  computer = new Player();
+  computer.randomShips();
+
+  compShips = [];
+  computer.board.board.map((row, i) => {
+    row.map((cell, j) => {
+      if(typeof cell === 'object') compShips.push(`${i},${j}`);
+    })
+  });
+}
+
+function newPlayer() {
+  // show ship place menu
+
+  player = new Player();
+  player.randomShips();   // debug
+  placePlayerShips();
+}
+
+function placePlayerShips() {
+  const playerShips = [];
+  player.board.board.map((row, i) => {
+    row.map((cell, j) => {
+      if(typeof cell === 'object') playerShips.push([i,j]);
+    })
+  });
+  playerShips.map((item) => {
+    $(`.player [data-row=${item[0]}][data-col=${item[1]}]`).addClass('ship');
+  });
+}
+
+function updateShipsLeft() {
+  $('.player .ships').text(player.board.shipsLeft());
+  $('.computer .ships').text(computer.board.shipsLeft());
 }

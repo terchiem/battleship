@@ -53,5 +53,46 @@ ul, p {
 }
 
 .miss {
-  background-color: blue;
+  background-color: lightblue;
+}
+
+
+// Result screen
+.results {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #00000063;
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.results-inner {
+  background-color: #fff;
+  max-width: 600px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.result-msg {
+  padding: 20px;
+  font-size: 24px;
+}
+.close-result {
+  align-self: flex-end;
+  border: none;
+  background-color: #fff;
+
+  &:hover {
+    text-shadow: 1px 1px 1px black;
+  }
+}
+
+.new-game {
+  margin: 10px auto;
+  justify-content: center;
 }
